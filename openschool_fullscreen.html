@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenSchool AI — Demo Day 2025</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Manrope',sans-serif}
+.pres-wrapper{width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;}
+.stage{position:relative;width:100%;max-width:calc(100vh * 16 / 9);aspect-ratio:16/9;}
+.pres{width:100%;height:100%;background:#EEEAE3;display:flex;flex-direction:column;font-family:'Manrope',sans-serif;position:relative;}
+.nav-bar{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:5px 14px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:100;gap:10px;}
+.nav-dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s;flex-shrink:0}
+.dot.active{background:#fff;width:22px;border-radius:4px}
+.nb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:7px;width:30px;height:28px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;justify-content:center;}
+.nb:hover{background:rgba(255,255,255,.25)}
+.snum{font-size:11px;color:rgba(255,255,255,.5);min-width:40px;text-align:right}
+.fs-btn{position:fixed;top:10px;right:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;color:#fff;font-size:11px;padding:4px 10px;cursor:pointer;z-index:500;font-family:'Manrope',sans-serif;font-weight:600;}
+.fs-btn:hover{background:rgba(255,255,255,.22)}
+.slide{width:100%;flex:1;overflow:hidden;background:#fff;display:none;flex-direction:column;}
+.slide.active{display:flex}
+.tb{border-bottom:1px solid #EDEAE8;padding:clamp(7px,1.3vw,14px) clamp(12px,1.8vw,24px);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.logo{font-size:clamp(9px,1vw,13px);font-weight:800;color:#6B3FD4;letter-spacing:.04em}
+.ttag{font-size:clamp(6px,.75vw,10px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6B3FD4;background:#F0EAFA;border:1px solid #D5C3F5;padding:3px 10px;border-radius:20px}
+.ct{font-size:clamp(6px,.72vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#aaa;margin-bottom:3px}
+.hl{font-size:clamp(12px,1.7vw,22px);font-weight:800;color:#111;line-height:1.15;margin-bottom:clamp(3px,.5vw,6px)}
+.hl em{color:#6B3FD4;font-style:normal}
+.fi{display:flex;align-items:center;gap:clamp(5px,.7vw,9px);padding:clamp(4px,.7vw,8px) clamp(7px,1vw,12px);background:#F9F8FF;border-radius:8px;border:1px solid #EDEAF8}
+.fic{font-size:clamp(11px,1.4vw,17px);min-width:1.3em;text-align:center}
+.ft strong{font-size:clamp(7px,.88vw,11px);font-weight:700;color:#111;display:block}
+.ft span{font-size:clamp(6px,.72vw,9px);color:#999}
+.sm{border-radius:10px;padding:clamp(6px,.9vw,12px);display:flex;flex-direction:column;justify-content:space-between}
+.sm.main{background:#6B3FD4}
+.sm.light{background:#fff;border:1px solid #EDEAF8}
+.sn{font-size:clamp(20px,3vw,40px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.sm.main .sn{color:#fff}
+.sm.light .sn{color:#6B3FD4}
+.sl{font-size:clamp(7px,.85vw,11px);font-weight:600;margin-top:3px;line-height:1.3}
+.sm.main .sl{color:rgba(255,255,255,.8)}
+.sm.light .sl{color:#555}
+.ss{font-size:clamp(6px,.72vw,9px);margin-top:2px;line-height:1.3}
+.sm.main .ss{color:rgba(255,255,255,.5)}
+.sm.light .ss{color:#aaa}
+.ri{background:#fff;border:1px solid #EDEAF8;border-radius:9px;padding:clamp(6px,.85vw,10px) clamp(8px,1.1vw,13px);display:flex;gap:clamp(6px,.9vw,10px);align-items:flex-start}
+.rn{font-size:clamp(13px,1.6vw,20px);font-weight:800;color:#E8E2F8;line-height:1;flex-shrink:0;min-width:1.4em}
+.rb strong{font-size:clamp(7px,.88vw,11px);font-weight:700;color:#111;display:block;margin-bottom:2px}
+.rb span{font-size:clamp(6px,.72vw,9px);color:#999;line-height:1.4}
+</style>
+</head>
+<body>
+<button class="fs-btn" onclick="toggleFS()" id="fsBtn">⛶ Полный экран</button>
+<div class="pres-wrapper">
+  <div class="stage">
+    <div class="pres">
+<!-- S1: TITLE -->
+<div class="slide active" id="s0" style="background:linear-gradient(135deg,#fff 60%,#F5F2FF 100%)">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Demo Day 2025</span></div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:clamp(12px,2vw,28px) clamp(16px,2.5vw,36px);gap:clamp(8px,1.2vw,14px)">
+    <div class="ct">EdTech · AI · Kazakhstan</div>
+    <div style="font-size:clamp(28px,5vw,66px);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:#111">Open<span style="color:#6B3FD4">School</span> AI</div>
+    <div style="font-size:clamp(11px,1.4vw,18px);color:#555;font-weight:500;max-width:55%;line-height:1.5">ИИ-помощник, который освобождает учителей от рутины и возвращает им время для живого обучения</div>
+  </div>
+</div>
+
+<!-- S2: ПРОБЛЕМА -->
+<div class="slide" id="s1">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Проблема</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+      <div class="ct">Куда уходит время учителя</div>
+      <div class="hl"><em>70% учителей</em> тратят 20+ часов<br>в неделю на задачи без учеников</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(4px,.6vw,6px);flex:1">
+        <div class="fi"><div class="fic">📋</div><div class="ft"><strong>Подготовка заданий</strong><span>Каждый урок — с нуля, вручную</span></div></div>
+        <div class="fi"><div class="fic">✏️</div><div class="ft"><strong>Проверка домашних работ</strong><span>По 30 тетрадей каждый вечер</span></div></div>
+        <div class="fi"><div class="fic">📊</div><div class="ft"><strong>Отчётность</strong><span>Журналы, ведомости, справки</span></div></div>
+        <div class="fi"><div class="fic">📡</div><div class="ft"><strong>Нет данных об успеваемости</strong><span>Кто не понимает — видно только на контрольной</span></div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+      <div class="ct">Исследование · 80 учителей · 2025</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(4px,.6vw,7px);flex:1">
+        <div class="sm main" style="grid-column:1/-1"><div class="sn">87%</div><div class="sl">хотят автоматизировать проверку</div><div class="ss">Первое, от чего готовы отказаться</div></div>
+        <div class="sm light"><div class="sn">73%</div><div class="sl">3+ часа в день на подготовку</div><div class="ss">Половина — повторяющиеся</div></div>
+        <div class="sm light"><div class="sn">91%</div><div class="sl">не успевают готовиться качественно</div><div class="ss">Из-за перегрузки рутиной</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3: РЕШЕНИЕ -->
+<div class="slide" id="s2">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Решение</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+      <div class="ct">Что мы делаем</div>
+      <div class="hl"><em>OpenSchool AI</em> — ИИ-помощник,<br>который берёт рутину на себя</div>
+      <div style="font-size:clamp(7px,.82vw,11px);color:#888;line-height:1.5;margin-bottom:4px">Учитель ставит задачу — система генерирует, проверяет, анализирует.</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(4px,.6vw,6px);flex:1">
+        <div class="fi"><div class="fic">✦</div><div class="ft"><strong>Генерация заданий и тестов</strong><span>По теме, классу и уровню — за секунды</span></div></div>
+        <div class="fi"><div class="fic">✦</div><div class="ft"><strong>Автопроверка домашних работ</strong><span>Фото тетради → оценка и обратная связь</span></div></div>
+        <div class="fi"><div class="fic">✦</div><div class="ft"><strong>Живые опросы на уроке</strong><span>Интерактив в один клик</span></div></div>
+        <div class="fi"><div class="fic">✦</div><div class="ft"><strong>Аналитика успеваемости</strong><span>Кто отстаёт — видно сразу</span></div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;gap:clamp(6px,.9vw,10px)">
+      <div class="ct">Трекшн</div>
+      <div style="background:#6B3FD4;border-radius:11px;padding:clamp(8px,1.2vw,16px);display:flex;align-items:center;gap:12px">
+        <div style="font-size:clamp(28px,4vw,52px);font-weight:800;color:#fff;line-height:1;flex-shrink:0">1</div>
+        <div><div style="font-size:clamp(8px,.95vw,12px);font-weight:700;color:#fff">Завуч на постоянной основе</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.55);margin-top:3px">Реальный пользователь · ежедневная работа</div></div>
+        <div style="margin-left:auto;background:rgba(255,255,255,.2);color:#fff;font-size:clamp(6px,.7vw,9px);font-weight:700;padding:2px 8px;border-radius:4px">LIVE</div>
+      </div>
+      <div class="ct">Входящий интерес</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(4px,.6vw,6px);flex:1">
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:9px;padding:clamp(6px,.85vw,10px) clamp(8px,1.1vw,12px);display:flex;align-items:center;gap:10px">
+          <div style="font-size:clamp(14px,1.8vw,20px)">🏫</div>
+          <div><div style="font-size:clamp(7px,.88vw,11px);font-weight:700;color:#111">Мангистауская область</div><div style="font-size:clamp(6px,.72vw,9px);color:#999">1 школа · хочет попробовать в тестовом режиме</div></div>
+          <div style="margin-left:auto;background:#FEF3E2;color:#A06010;font-size:clamp(6px,.68vw,9px);font-weight:700;padding:2px 7px;border-radius:4px">ТЕСТ</div>
+        </div>
+        <div style="background:#fff;border:1px solid #EDEAE8;border-radius:9px;padding:clamp(6px,.85vw,10px) clamp(8px,1.1vw,12px);display:flex;align-items:center;gap:10px">
+          <div style="font-size:clamp(14px,1.8vw,20px)">🏫</div>
+          <div><div style="font-size:clamp(7px,.88vw,11px);font-weight:700;color:#111">Туркестанская область</div><div style="font-size:clamp(6px,.72vw,9px);color:#999">1 школа · хочет попробовать в тестовом режиме</div></div>
+          <div style="margin-left:auto;background:#FEF3E2;color:#A06010;font-size:clamp(6px,.68vw,9px);font-weight:700;padding:2px 7px;border-radius:4px">ТЕСТ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S4: ПОЧЕМУ СЕЙЧАС -->
+<div class="slide" id="s3">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Почему сейчас</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Государственный сигнал</div>
+      <div style="background:#6B3FD4;border-radius:12px;padding:clamp(10px,1.4vw,16px);display:flex;align-items:center;gap:12px">
+        <div style="font-size:clamp(24px,3.8vw,50px);font-weight:800;color:#fff;line-height:1;flex-shrink:0">2026</div>
+        <div><div style="font-size:clamp(9px,1.1vw,14px);font-weight:800;color:#fff;line-height:1.2">Год искусственного<br>интеллекта в Казахстане</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.55);margin-top:4px">Объявлен Президентом Токаевым</div></div>
+      </div>
+      <div style="background:#F9F8FF;border-left:3px solid #6B3FD4;border-radius:0 9px 9px 0;padding:clamp(7px,1vw,12px) clamp(9px,1.2vw,14px)">
+        <div style="font-size:clamp(7px,.85vw,11px);color:#333;font-style:italic;line-height:1.55;margin-bottom:4px">«Казахстан должен войти в число стран, которые задают темп в развитии искусственного интеллекта»</div>
+        <div style="font-size:clamp(6px,.7vw,9px);color:#aaa;font-weight:700">— Президент К. Токаев</div>
+      </div>
+      <div class="hl">Государство <em>само создаёт спрос</em><br>на ИИ в образовании</div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+      <div class="ct">Почему именно сейчас</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(4px,.6vw,6px);flex:1">
+        <div class="ri"><div class="rn">01</div><div class="rb"><strong>Школы ищут ИИ-решения прямо сейчас</strong><span>Год ИИ создал запрос сверху — директора обязаны внедрять цифровые инструменты</span></div></div>
+        <div class="ri"><div class="rn">02</div><div class="rb"><strong>Рынок не занят — конкурентов с фокусом на учителя нет</strong><span>Существующие решения закрывают администрацию, но не рутину учителя</span></div></div>
+        <div class="ri"><div class="rn">03</div><div class="rb"><strong>Технологии доступны и дёшевы</strong><span>Юнит-экономика сходится — стоимость ИИ упала в 10 раз за год</span></div></div>
+        <div class="ri"><div class="rn">04</div><div class="rb"><strong>Мы уже внутри — есть пользователь и интерес школ</strong><span>Пока конкуренты думают, мы тестируем с реальными учителями</span></div></div>
+      </div>
+      <div style="background:#FFF8ED;border:1px solid #F5E4BE;border-radius:9px;padding:clamp(6px,.85vw,10px) clamp(8px,1.1vw,13px);display:flex;align-items:center;gap:8px">
+        <span style="font-size:clamp(12px,1.5vw,18px)">⚡</span>
+        <div><strong style="font-size:clamp(7px,.88vw,11px);color:#8A5A00;display:block">Окно возможностей открыто сейчас</strong><span style="font-size:clamp(6px,.7vw,9px);color:#B07A20">Кто зайдёт первым — займёт рынок</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5: РЫНОК -->
+<div class="slide" id="s4">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Размер рынка</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Рынок</div>
+      <div class="hl">EdTech — один из<br>самых быстрорастущих <em>рынков</em></div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#6B3FD4;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(8px,.82vw,10px);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-bottom:3px">TAM · Глобально</div><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#fff;line-height:1">$404B</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.55);margin-top:2px">Мировой рынок EdTech</div></div>
+        <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(8px,.82vw,10px);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#6B3FD4;margin-bottom:3px">SAM · СНГ + Центральная Азия</div><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">$4.2B</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:2px">Доступный рынок региона</div></div>
+        <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(8px,.82vw,10px);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#6B3FD4;margin-bottom:3px">SOM · Казахстан</div><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">$180M</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:2px">Школьное образование РК · 400K учителей</div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Ключевые цифры</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">400K+</div><div style="font-size:clamp(7px,.82vw,10px);color:#555;font-weight:600;margin-top:3px">учителей в Казахстане</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">16%</div><div style="font-size:clamp(7px,.82vw,10px);color:#555;font-weight:600;margin-top:3px">рост рынка в год</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">7 990₸</div><div style="font-size:clamp(7px,.82vw,10px);color:#555;font-weight:600;margin-top:3px">средний чек · тариф Про</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">0</div><div style="font-size:clamp(7px,.82vw,10px);color:#555;font-weight:600;margin-top:3px">прямых конкурентов в РК</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S6: БИЗНЕС-МОДЕЛЬ -->
+<div class="slide" id="s5">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Бизнес-модель</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;gap:clamp(6px,.9vw,10px)">
+      <div class="ct">Монетизация · SaaS подписка</div>
+      <div class="hl">Три тарифа —<br><em>от учителя до школы</em></div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px);flex:1">
+        <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(7px,1vw,12px) clamp(9px,1.2vw,14px)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-size:clamp(8px,.92vw,12px);font-weight:800;color:#111">Плюс</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:2px">Для регулярной подготовки уроков</div></div><div style="text-align:right"><div style="font-size:clamp(13px,1.7vw,22px);font-weight:800;color:#6B3FD4">3 990₸</div><div style="font-size:clamp(6px,.68vw,9px);color:#aaa">в месяц</div></div></div><div style="font-size:clamp(6px,.7vw,9px);color:#888;margin-top:4px">25+ инструментов · 15 генераций/день · 30 проверок ДЗ</div></div>
+        <div style="background:#6B3FD4;border-radius:10px;padding:clamp(7px,1vw,12px) clamp(9px,1.2vw,14px);position:relative"><div style="position:absolute;top:8px;right:10px;background:#fff;color:#6B3FD4;font-size:clamp(6px,.68vw,9px);font-weight:800;padding:2px 8px;border-radius:4px">ПОПУЛЯРНЫЙ</div><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-size:clamp(8px,.92vw,12px);font-weight:800;color:#fff">Про</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.65);margin-top:2px">Для полной учебной нагрузки</div></div><div style="text-align:right"><div style="font-size:clamp(13px,1.7vw,22px);font-weight:800;color:#fff">7 990₸</div><div style="font-size:clamp(6px,.68vw,9px);color:rgba(255,255,255,.55)">в месяц</div></div></div><div style="font-size:clamp(6px,.7vw,9px);color:rgba(255,255,255,.65);margin-top:4px">30 генераций · 60 проверок ДЗ · персонализация · экономия 8–10 ч/нед</div></div>
+        <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(7px,1vw,12px) clamp(9px,1.2vw,14px)"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-size:clamp(8px,.92vw,12px);font-weight:800;color:#111">Макс</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:2px">Для работы с несколькими классами</div></div><div style="text-align:right"><div style="font-size:clamp(13px,1.7vw,22px);font-weight:800;color:#6B3FD4">23 990₸</div><div style="font-size:clamp(6px,.68vw,9px);color:#aaa">в месяц</div></div></div><div style="font-size:clamp(6px,.7vw,9px);color:#888;margin-top:4px">60 генераций · 150 проверок · личный менеджер · экономия 15–20 ч/мес</div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;gap:clamp(6px,.9vw,10px);justify-content:center">
+      <div class="ct">Экономика</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(16px,2.2vw,28px);font-weight:800;color:#6B3FD4;line-height:1">7 дней</div><div style="font-size:clamp(7px,.78vw,10px);color:#555;font-weight:600;margin-top:3px">бесплатный пробный период</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(16px,2.2vw,28px);font-weight:800;color:#6B3FD4;line-height:1">−40%</div><div style="font-size:clamp(7px,.78vw,10px);color:#555;font-weight:600;margin-top:3px">скидка при оплате за год</div></div>
+      </div>
+      <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.2vw,14px)"><div style="font-size:clamp(7px,.78vw,10px);font-weight:700;color:#6B3FD4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">B2B pipeline</div><div style="font-size:clamp(8px,.92vw,12px);color:#333;line-height:1.5">Школа на 50 учителей × Про = <strong style="color:#6B3FD4">399 500₸/мес</strong></div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:3px">Один контракт = 50 подписок автоматически</div></div>
+      <div style="background:#FFF8ED;border:1px solid #F5E4BE;border-radius:10px;padding:clamp(8px,1.2vw,14px)"><div style="font-size:clamp(7px,.78vw,10px);font-weight:700;color:#8A5A00;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Реферальная программа</div><div style="font-size:clamp(8px,.92vw,12px);color:#333">Пригласи 5 друзей → месяц Плюс бесплатно</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:3px">Органический рост внутри учительского сообщества</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S7: КОНКУРЕНТЫ -->
+<div class="slide" id="s6">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Конкуренты</span></div>
+  <div style="flex:1;padding:clamp(8px,1.2vw,16px) clamp(12px,1.8vw,22px);display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+    <div class="hl">Прямых конкурентов с <em>фокусом на учителя</em> в РК нет</div>
+    <!-- Таблица -->
+    <div style="flex:1;overflow:hidden;border-radius:10px;border:1px solid #EDEAE8;display:flex;flex-direction:column">
+      <!-- Header -->
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1.2fr;background:#F9F8FF;border-bottom:1px solid #EDEAE8;flex-shrink:0">
+        <div style="padding:clamp(4px,.6vw,8px) clamp(6px,.9vw,10px);font-size:clamp(6px,.72vw,9px);font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.08em">Функционал</div>
+        <div style="padding:clamp(4px,.6vw,8px);font-size:clamp(6px,.75vw,10px);font-weight:800;color:#555;text-align:center">Kundelik.kz</div>
+        <div style="padding:clamp(4px,.6vw,8px);font-size:clamp(6px,.75vw,10px);font-weight:800;color:#555;text-align:center">Bilim Class</div>
+        <div style="padding:clamp(4px,.6vw,8px);font-size:clamp(6px,.75vw,10px);font-weight:800;color:#555;text-align:center">Shyraq AI</div>
+        <div style="padding:clamp(4px,.6vw,8px);font-size:clamp(6px,.75vw,10px);font-weight:800;color:#555;text-align:center">Ustaz AI</div>
+        <div style="padding:clamp(4px,.6vw,8px);font-size:clamp(6px,.75vw,10px);font-weight:800;color:#6B3FD4;text-align:center;background:#F0EAFA">OpenSchool AI</div>
+      </div>
+      <!-- Rows -->
+      <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+        <style>
+        .crow{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1.2fr;border-bottom:1px solid #F5F4F0;align-items:center}
+        .crow:last-child{border-bottom:none}
+        .crow:nth-child(even){background:#FDFCFF}
+        .cn{padding:clamp(3px,.5vw,6px) clamp(6px,.9vw,10px);font-size:clamp(6px,.72vw,9px);color:#555;font-weight:500}
+        .cc{display:flex;align-items:center;justify-content:center;padding:clamp(3px,.5vw,6px) 4px}
+        .yes{width:clamp(10px,1.4vw,16px);height:clamp(10px,1.4vw,16px);border-radius:50%;background:#6B3FD4;flex-shrink:0}
+        .no{width:clamp(10px,1.4vw,16px);height:clamp(10px,1.4vw,16px);border-radius:50%;background:#E5E5E5;flex-shrink:0}
+        .part{width:clamp(10px,1.4vw,16px);height:clamp(10px,1.4vw,16px);border-radius:50%;background:#F5C842;flex-shrink:0}
+        .cc.hl-col{background:#F8F5FF}
+        </style>
+        <div class="crow"><div class="cn">Генерация заданий (AI)</div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="yes"></div></div><div class="cc"><div class="part"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">Автопроверка заданий (AI)</div><div class="cc"><div class="no"></div></div><div class="cc"><div class="part"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">Генерация тестов и квизов</div><div class="cc"><div class="part"></div></div><div class="cc"><div class="part"></div></div><div class="cc"><div class="yes"></div></div><div class="cc"><div class="part"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">Живые опросы на уроке</div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">Аналитика успеваемости</div><div class="cc"><div class="yes"></div></div><div class="cc"><div class="yes"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">AI-помощник учителя</div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="yes"></div></div><div class="cc"><div class="yes"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+        <div class="crow"><div class="cn">Персонализация обучения</div><div class="cc"><div class="no"></div></div><div class="cc"><div class="no"></div></div><div class="cc"><div class="part"></div></div><div class="cc"><div class="no"></div></div><div class="cc hl-col"><div class="yes"></div></div></div>
+      </div>
+    </div>
+    <!-- Legend -->
+    <div style="display:flex;align-items:center;gap:16px;margin-top:4px">
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:#6B3FD4"></div><span style="font-size:clamp(6px,.7vw,9px);color:#888">Есть</span></div>
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:#F5C842"></div><span style="font-size:clamp(6px,.7vw,9px);color:#888">Частично</span></div>
+      <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:50%;background:#E5E5E5"></div><span style="font-size:clamp(6px,.7vw,9px);color:#888">Нет</span></div>
+      <div style="margin-left:auto;background:#E6F5ED;border:1px solid #A8DCBC;border-radius:7px;padding:3px 10px"><span style="font-size:clamp(6px,.75vw,10px);color:#1A5A35;font-weight:700">🎯 Единственные с живыми опросами + автопроверкой в РК</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S8: ТРЕКШН -->
+<div class="slide" id="s7">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Трекшн за время программы</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;gap:clamp(6px,.9vw,10px)">
+      <div class="ct">Что сделано</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(4px,.6vw,6px);flex:1">
+        <div class="fi"><div class="fic">✅</div><div class="ft"><strong>80 глубинных интервью с учителями</strong><span>Алматы и регионы · подтверждена проблема</span></div></div>
+        <div class="fi"><div class="fic">✅</div><div class="ft"><strong>Запущен MVP с 3 тарифами</strong><span>Генерация · проверка · опросы</span></div></div>
+        <div class="fi"><div class="fic">✅</div><div class="ft"><strong>1 платящий пользователь — завуч</strong><span>Использует на ежедневной основе</span></div></div>
+        <div class="fi"><div class="fic">🔄</div><div class="ft"><strong>Входящий интерес от 2 школ</strong><span>Мангистауская и Туркестанская области</span></div></div>
+        <div class="fi"><div class="fic">🔄</div><div class="ft"><strong>Публикация в СМИ про OpenSchool AI</strong><span>Медиа-присутствие · рост узнаваемости</span></div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;gap:clamp(6px,.9vw,10px)">
+      <div class="ct">Ключевые метрики</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:clamp(5px,.7vw,8px);flex:1;align-content:start">
+        <div style="background:#6B3FD4;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#fff;line-height:1">80</div><div style="font-size:clamp(7px,.78vw,10px);color:rgba(255,255,255,.75);font-weight:600;margin-top:3px">интервью проведено</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">1</div><div style="font-size:clamp(7px,.78vw,10px);color:#555;font-weight:600;margin-top:3px">активный пользователь</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">2</div><div style="font-size:clamp(7px,.78vw,10px);color:#555;font-weight:600;margin-top:3px">школы в воронке</div></div>
+        <div style="background:#fff;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">3</div><div style="font-size:clamp(7px,.78vw,10px);color:#555;font-weight:600;margin-top:3px">тарифных плана</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S9: РОУДМАП -->
+<div class="slide" id="s8">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Роудмап</span></div>
+  <div style="flex:1;padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);display:flex;flex-direction:column;gap:clamp(8px,1.1vw,12px)">
+    <div class="hl">От первого пользователя до <em>масштаба по стране</em></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(5px,.7vw,8px);flex:1;align-items:stretch">
+      <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;flex-direction:column;gap:5px"><div style="font-size:clamp(6px,.7vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B3FD4;margin-bottom:2px">Сейчас · Апрель 2026</div><div style="font-size:clamp(8px,.95vw,12px);font-weight:800;color:#111;margin-bottom:4px">MVP + первые пользователи</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span style="color:#6B3FD4">✓</span>MVP запущен</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span style="color:#6B3FD4">✓</span>80 интервью</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span style="color:#6B3FD4">✓</span>1 пользователь</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span style="color:#6B3FD4">✓</span>2 школы в воронке</div></div></div>
+      <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;flex-direction:column;gap:5px"><div style="font-size:clamp(6px,.7vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B3FD4;margin-bottom:2px">Q2–Q3 2026</div><div style="font-size:clamp(8px,.95vw,12px);font-weight:800;color:#111;margin-bottom:4px">Пилоты и первые продажи</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>Запуск 2 пилотных школ</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>100+ активных учителей</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>Первая выручка</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>Доработка продукта</div></div></div>
+      <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;flex-direction:column;gap:5px"><div style="font-size:clamp(6px,.7vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B3FD4;margin-bottom:2px">Q4 2026</div><div style="font-size:clamp(8px,.95vw,12px);font-weight:800;color:#111;margin-bottom:4px">Масштаб по Казахстану</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>1 000+ учителей</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>10+ школ</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>B2B контракты</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>PR и медиа</div></div></div>
+      <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;flex-direction:column;gap:5px"><div style="font-size:clamp(6px,.7vw,9px);font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6B3FD4;margin-bottom:2px">2027</div><div style="font-size:clamp(8px,.95vw,12px);font-weight:800;color:#111;margin-bottom:4px">Выход в регион</div><div style="display:flex;flex-direction:column;gap:3px"><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>Узбекистан</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>Кыргызстан</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>5 000+ учителей</div><div style="font-size:clamp(6px,.7vw,9px);color:#555;display:flex;gap:5px"><span>→</span>ARR $300K+</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S10: КОМАНДА -->
+<div class="slide" id="s9">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Команда</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.5vw,16px)">
+      <div class="ct">Основатель</div>
+      <div style="display:flex;align-items:center;gap:clamp(10px,1.5vw,18px)">
+        <div style="width:clamp(50px,7vw,80px);height:clamp(50px,7vw,80px);border-radius:50%;background:#6B3FD4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(18px,2.5vw,32px);color:#fff;flex-shrink:0">Я</div>
+        <div><div style="font-size:clamp(12px,1.6vw,20px);font-weight:800;color:#111">Основатель OpenSchool AI</div><div style="font-size:clamp(7px,.82vw,11px);color:#888;margin-top:5px;line-height:1.5">Продукт · Разработка · Продажи · Стратегия</div></div>
+      </div>
+      <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.2vw,14px)"><div style="font-size:clamp(7px,.82vw,11px);color:#333;font-style:italic;line-height:1.55">«Один человек сейчас — потому что верю в продукт и готов строить его с нуля. Ищу партнёров и команду по мере роста.»</div></div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Что ищем</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div class="fi"><div class="fic">👨‍💻</div><div class="ft"><strong>Технический со-основатель</strong><span>ML/Backend · масштабирование продукта</span></div></div>
+        <div class="fi"><div class="fic">📈</div><div class="ft"><strong>Специалист по продажам B2B</strong><span>Работа со школами и отделами образования</span></div></div>
+        <div class="fi"><div class="fic">📣</div><div class="ft"><strong>Маркетинг / Growth</strong><span>Рост внутри учительских сообществ</span></div></div>
+      </div>
+      <div style="background:#E6F5ED;border:1px solid #A8DCBC;border-radius:9px;padding:clamp(6px,.85vw,10px) clamp(9px,1.2vw,13px)"><div style="font-size:clamp(7px,.82vw,11px);color:#1A5A35;font-weight:700">Сила одного основателя — скорость и фокус</div><div style="font-size:clamp(6px,.7vw,9px);color:#2A7A50;margin-top:2px">80 интервью, MVP и первые продажи — всё это уже сделано</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S11: ЗАПРОС -->
+<div class="slide" id="s10" style="background:linear-gradient(135deg,#fff 55%,#F5F2FF 100%)">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Наш запрос</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Что нам нужно</div>
+      <div class="hl">Не деньги —<br><em>поддержка и экспертиза</em></div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#6B3FD4;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;gap:10px;align-items:flex-start"><span style="font-size:clamp(14px,1.8vw,22px)">🏢</span><div><div style="font-size:clamp(8px,.95vw,12px);font-weight:800;color:#fff">Поддержка Astana Hub</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.65);margin-top:2px">Резидентство · менторство · нетворк со школами</div></div></div>
+        <div class="fi"><div class="fic">📰</div><div class="ft"><strong>Публикации про OpenSchool AI</strong><span>Доверие учителей и школ</span></div></div>
+        <div class="fi"><div class="fic">🤝</div><div class="ft"><strong>Связи с МОН и акиматами</strong><span>Выход на пилоты с государственными школами</span></div></div>
+        <div class="fi"><div class="fic">👥</div><div class="ft"><strong>Помощь с командой</strong><span>Технический со-основатель · B2B продажи</span></div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,12px)">
+      <div class="ct">Куда идём</div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(8px,.82vw,10px);font-weight:700;color:#6B3FD4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Цель 2026</div><div style="font-size:clamp(14px,2vw,26px);font-weight:800;color:#6B3FD4;line-height:1">1 000 учителей</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:3px">10+ школ · первая устойчивая выручка</div></div>
+        <div style="background:#F9F8FF;border:1px solid #EDEAF8;border-radius:10px;padding:clamp(8px,1.1vw,14px)"><div style="font-size:clamp(8px,.82vw,10px);font-weight:700;color:#6B3FD4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Цель 2027</div><div style="font-size:clamp(14px,2vw,26px);font-weight:800;color:#111;line-height:1">Центральная Азия</div><div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:3px">Узбекистан · Кыргызстан · 5 000+ учителей</div></div>
+        <div style="background:#FFF8ED;border:1px solid #F5E4BE;border-radius:9px;padding:clamp(7px,1vw,11px) clamp(9px,1.2vw,13px);display:flex;align-items:center;gap:8px"><span style="font-size:clamp(14px,1.8vw,20px)">⚡</span><div><strong style="font-size:clamp(7px,.88vw,11px);color:#8A5A00;display:block">Год ИИ 2026 — лучший момент для старта</strong><span style="font-size:clamp(6px,.7vw,9px);color:#B07A20">Государство толкает, рынок открыт, мы уже внутри</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+    <div class="nav-bar">
+      <div style="display:flex;gap:5px">
+        <button class="nb" onclick="go(-1)">&#8592;</button>
+        <button class="nb" onclick="go(1)">&#8594;</button>
+      </div>
+      <div class="nav-dots" id="dots"></div>
+      <span class="snum" id="snum">1 / 11</span>
+    </div>
+  </div>
+</div>
+<script>
+let cur=0;const total=11;
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('dots');
+const snumEl=document.getElementById('snum');
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
+function goTo(n){slides[cur].classList.remove('active');dotsEl.children[cur].classList.remove('active');cur=(n+total)%total;slides[cur].classList.add('active');dotsEl.children[cur].classList.add('active');snumEl.textContent=(cur+1)+' / '+total;}
+function go(d){goTo(cur+d);}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')go(1);
+  if(e.key==='ArrowLeft')go(-1);
+  if(e.key==='f'||e.key==='F')toggleFS();
+});
+function toggleFS(){
+  const btn=document.getElementById('fsBtn');
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen();btn.textContent='✕ Выйти';}
+  else{document.exitFullscreen();btn.textContent='⛶ Полный экран';}
+}
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)document.getElementById('fsBtn').textContent='⛶ Полный экран';});
+</script>
+</body>
+</html>
