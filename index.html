@@ -136,6 +136,41 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Ma
   </div>
 </div>
 
+<!-- S3.5: ПЕРВЫЕ РЕЗУЛЬТАТЫ -->
+<div class="slide" id="s_results">
+  <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Первые результаты</span></div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;overflow:hidden">
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);border-right:1px solid #EDEAE8;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,14px)">
+      <div class="ct">Уже сегодня</div>
+      <div class="hl">Продукт работает —<br><em>деньги уже есть</em></div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#6B3FD4;border-radius:10px;padding:clamp(8px,1.1vw,14px);display:flex;align-items:center;gap:12px">
+          <div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#fff;line-height:1;flex-shrink:0">3 000₸</div>
+          <div><div style="font-size:clamp(8px,.95vw,12px);font-weight:700;color:#fff">Первая реальная выручка</div><div style="font-size:clamp(6px,.72vw,9px);color:rgba(255,255,255,.6);margin-top:2px">Доказательство готовности платить</div></div>
+        </div>
+        <div class="fi"><div class="fic">👩‍💼</div><div class="ft"><strong>1 платящий пользователь — завуч</strong><span>Работает с продуктом каждый день</span></div></div>
+        <div class="fi"><div class="fic">🏫</div><div class="ft"><strong>2 школы в воронке</strong><span>Мангистауская и Туркестанская области · готовы к пилоту</span></div></div>
+      </div>
+    </div>
+    <div style="padding:clamp(10px,1.5vw,18px) clamp(12px,1.8vw,22px);background:#FAFAFA;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,1.1vw,14px)">
+      <div class="ct">Потенциал воронки</div>
+      <div class="hl">Если 2 школы<br><em>подпишутся</em></div>
+      <div style="display:flex;flex-direction:column;gap:clamp(5px,.7vw,8px)">
+        <div style="background:#F0EAFA;border:1px solid #D5C3F5;border-radius:10px;padding:clamp(8px,1.1vw,14px)">
+          <div style="font-size:clamp(7px,.78vw,10px);font-weight:700;color:#6B3FD4;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">30 учителей × Про × 2 школы</div>
+          <div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#6B3FD4;line-height:1">479 400₸<span style="font-size:clamp(8px,.9vw,12px);font-weight:600;color:#888">/мес</span></div>
+          <div style="font-size:clamp(6px,.72vw,9px);color:#888;margin-top:3px">Только с двух контрактов</div>
+        </div>
+        <div style="background:#E6F5ED;border:1px solid #A8DCBC;border-radius:10px;padding:clamp(8px,1.1vw,14px)">
+          <div style="font-size:clamp(7px,.78vw,10px);font-weight:700;color:#1A5A35;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Годовой потенциал</div>
+          <div style="font-size:clamp(20px,2.8vw,36px);font-weight:800;color:#1A5A35;line-height:1">5.7M₸<span style="font-size:clamp(8px,.9vw,12px);font-weight:600;color:#2A7A50">/год</span></div>
+          <div style="font-size:clamp(6px,.72vw,9px);color:#2A7A50;margin-top:3px">~$12 000 ARR · только старт</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- S4: ПОЧЕМУ СЕЙЧАС -->
 <div class="slide" id="s3">
   <div class="tb"><span class="logo">OPENSCHOOL AI</span><span class="ttag">Почему сейчас</span></div>
@@ -366,12 +401,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Ma
         <button class="nb" onclick="go(1)">&#8594;</button>
       </div>
       <div class="nav-dots" id="dots"></div>
-      <span class="snum" id="snum">1 / 11</span>
+      <span class="snum" id="snum">1 / 12</span>
     </div>
   </div>
 </div>
 <script>
-let cur=0;const total=11;
+let cur=0;const total=12;
 const slides=document.querySelectorAll('.slide');
 const dotsEl=document.getElementById('dots');
 const snumEl=document.getElementById('snum');
