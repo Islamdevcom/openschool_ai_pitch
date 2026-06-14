@@ -7,21 +7,29 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Manrope',sans-serif}
-.pres-wrapper{width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#111;}
-.stage{position:relative;width:100%;max-width:calc(100vh * 16 / 9);aspect-ratio:16/9;}
-.pres{width:100%;height:100%;background:#EEEAE3;display:flex;flex-direction:column;font-family:'Manrope',sans-serif;position:relative;}
-.nav-bar{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:5px 14px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:100;gap:10px;}
+html,body{width:100%;height:100%;overflow:hidden;background:#0A0614;font-family:'Manrope',sans-serif}
+.pres-wrapper{width:100vw;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 40%,#1E0A40 0%,#0A0614 70%);}
+.stage{position:relative;width:100%;max-width:calc(100vh * 16 / 9);aspect-ratio:16/9;border-radius:6px;overflow:hidden;box-shadow:0 0 0 1px rgba(107,63,212,.25),0 30px 80px rgba(0,0,0,.9),0 0 120px rgba(107,63,212,.18);}
+.pres{width:100%;height:100%;font-family:'Manrope',sans-serif;position:relative;overflow:hidden;}
+.nav-bar{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:5px 14px;background:rgba(8,4,20,.7);backdrop-filter:blur(10px);z-index:100;gap:10px;border-top:1px solid rgba(107,63,212,.2);}
 .nav-dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
-.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .25s;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);flex-shrink:0}
 .dot.active{background:#fff;width:22px;border-radius:4px}
-.nb{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:7px;width:30px;height:28px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;justify-content:center;}
-.nb:hover{background:rgba(255,255,255,.25)}
-.snum{font-size:11px;color:rgba(255,255,255,.5);min-width:40px;text-align:right}
-.fs-btn{position:fixed;top:10px;right:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:6px;color:#fff;font-size:11px;padding:4px 10px;cursor:pointer;z-index:500;font-family:'Manrope',sans-serif;font-weight:600;}
-.fs-btn:hover{background:rgba(255,255,255,.22)}
-.slide{width:100%;flex:1;overflow:hidden;background:#fff;display:none;flex-direction:column;}
-.slide.active{display:flex}
+.nb{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:7px;width:30px;height:28px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.nb:hover{background:rgba(107,63,212,.45)}
+.snum{font-size:11px;color:rgba(255,255,255,.4);min-width:40px;text-align:right}
+.fs-btn{position:fixed;top:12px;right:14px;background:rgba(107,63,212,.25);border:1px solid rgba(107,63,212,.5);border-radius:8px;color:#fff;font-size:11px;padding:5px 12px;cursor:pointer;z-index:500;font-family:'Manrope',sans-serif;font-weight:700;letter-spacing:.04em;transition:background .2s;}
+.fs-btn:hover{background:rgba(107,63,212,.55)}
+.slide{position:absolute;inset:0;overflow:hidden;background:#fff;display:flex;flex-direction:column;opacity:0;pointer-events:none;}
+.slide.active{opacity:1;pointer-events:auto;}
+@keyframes sInR{from{opacity:0;transform:translateX(4%)}to{opacity:1;transform:none}}
+@keyframes sInL{from{opacity:0;transform:translateX(-4%)}to{opacity:1;transform:none}}
+@keyframes sOutL{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-4%)}}
+@keyframes sOutR{from{opacity:1;transform:none}to{opacity:0;transform:translateX(4%)}}
+.s-in-r{animation:sInR .42s cubic-bezier(.4,0,.2,1) both}
+.s-in-l{animation:sInL .42s cubic-bezier(.4,0,.2,1) both}
+.s-out-l{animation:sOutL .42s cubic-bezier(.4,0,.2,1) both}
+.s-out-r{animation:sOutR .42s cubic-bezier(.4,0,.2,1) both}
 .tb{border-bottom:1px solid #EDEAE8;padding:clamp(7px,1.3vw,14px) clamp(12px,1.8vw,24px);display:flex;align-items:center;justify-content:space-between;flex-direction:row-reverse;flex-shrink:0}
 .logo{font-size:clamp(9px,1vw,13px);font-weight:800;color:#6B3FD4;letter-spacing:.04em}
 .ttag{font-size:clamp(6px,.75vw,10px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6B3FD4;background:#F0EAFA;border:1px solid #D5C3F5;padding:3px 10px;border-radius:20px}
@@ -401,12 +409,34 @@ html,body{width:100%;height:100%;overflow:hidden;background:#111;font-family:'Ma
   </div>
 </div>
 <script>
-let cur=0;const total=12;
+let cur=0,busy=false;
+const total=12;
+const DUR=420;
 const slides=document.querySelectorAll('.slide');
 const dotsEl=document.getElementById('dots');
 const snumEl=document.getElementById('snum');
 for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goTo(i);dotsEl.appendChild(d);}
-function goTo(n){slides[cur].classList.remove('active');dotsEl.children[cur].classList.remove('active');cur=(n+total)%total;slides[cur].classList.add('active');dotsEl.children[cur].classList.add('active');snumEl.textContent=(cur+1)+' / '+total;}
+function goTo(n){
+  const next=(n+total)%total;
+  if(next===cur||busy)return;
+  busy=true;
+  const dir=next>cur?1:-1;
+  const from=slides[cur],to=slides[next];
+  const anims=['s-in-r','s-in-l','s-out-l','s-out-r'];
+  from.classList.remove(...anims);to.classList.remove(...anims);
+  to.classList.add('active');
+  to.classList.add(dir>0?'s-in-r':'s-in-l');
+  from.classList.add(dir>0?'s-out-l':'s-out-r');
+  dotsEl.children[cur].classList.remove('active');
+  dotsEl.children[next].classList.add('active');
+  cur=next;
+  snumEl.textContent=(cur+1)+' / '+total;
+  setTimeout(()=>{
+    slides.forEach((s,i)=>{if(i!==cur){s.classList.remove('active');s.classList.remove(...anims);}});
+    slides[cur].classList.remove(...anims);
+    busy=false;
+  },DUR);
+}
 function go(d){goTo(cur+d);}
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key===' ')go(1);
